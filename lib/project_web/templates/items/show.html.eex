@@ -1,0 +1,20 @@
+<html>
+<head>
+<h1>SHIT</h1>
+</head>
+<%= if not Enum.empty?(@items) do %>
+    <%= for item <- @items do %>
+        <div>
+            <%= item.name %>
+            <a href="<%= Routes.items_path(@conn, :delete, item.id) %>">   delete</a>
+        </div>
+    <% end %>
+<% else %>
+    <div>Sorry Buddy, No More dope things for you</div>
+<%end%> 
+
+
+<div><br></div> 
+
+        <a href="<%= Routes.items_path(@conn, :new) %>">CREATE NEW</a>
+</html>

@@ -2,29 +2,47 @@ defmodule ProjectWeb.ItemsController do
   use ProjectWeb, :controller
 
   alias Project.Item
+  alias Project.Items
   alias Project.Repo
+  alias Project.Brands.Brand
 
-  def index(conn, _params) do
-    items = Repo.all(Item)
-    render(conn, "index.html", items: items)
+  import Ecto.Query
+
+  def index(conn, params) do
+    items = case params["brand_id"] do
+      nil -> Repo.all(Item)
+      brand_id -> Repo.all(from i in Item, where: i.brand_id == ^brand_id)
+    end
+
+    render(conn, "index.html", items: Repo.preload(items, :brand))
   end
 
   def new(conn, _params) do
-    empty_item = %Item{}
-    changeset = Item.changeset(empty_item)
-    render(conn, "new.html", changeset: changeset)
+    changeset =
+      %Item{}
+      |>Item.changeset
+
+    # brands = Repo.all(Brand)
+    # brand_options = Enum.map(brands, &brand_to_option/1)
+    brand_options =
+      Brand
+      |> Repo.all
+      |> Enum.map(fn brand -> {brand.name, brand.id} end)
+
+    render(conn, "new.html", changeset: changeset, brand_options: brand_options)
   end
 
   def create(conn, %{"item" => item}) do
-    changeset = Item.changeset(%Item{}, item)
-    Repo.insert(changeset)
+    Items.create_item(item)
     redirect(conn, to: "/items")
   end
 
   def delete(conn, %{"id" => id}) do
-    Repo.get(Item, id)
-    |>Repo.delete()
+    Items.delete_item(id)
     redirect(conn, to: "/items")
   end
 
+  defp brand_to_option(brand) do
+    {brand.name, brand.id}
+  end
 end

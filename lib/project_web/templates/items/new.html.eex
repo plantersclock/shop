@@ -7,6 +7,10 @@
     Inventory: <%= text_input f, :inventory %>
   </label>
 
+   <label>
+    Brand: <%= select f, :brand_id, @brand_options %>
+  </label>
+
   <label>
     Cost: <%= text_input f, :cost %>
   </label>
