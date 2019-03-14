@@ -69,7 +69,7 @@ config :phoenix, :plug_init_mode, :runtime
 # Configure your database
 config :project, Project.Repo,
   username: "postgres",
-  password: "Money86!",
+  password: "postgres",
   database: "project_dev",
   hostname: "localhost",
   pool_size: 10

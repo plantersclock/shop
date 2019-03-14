@@ -1,6 +1,6 @@
 <html>
 <head>
-<h1>SHIT</h1>
+<h1>STUFF</h1>
 </head>
 <%= if not Enum.empty?(@items) do %>
     <%= for item <- @items do %>

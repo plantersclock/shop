@@ -1,4 +1,4 @@
-<h1>WHALECUMMMM</h1>
+<h1>SHOP</h1>
 
 <%= for brand <- @brands do %>
         <div>

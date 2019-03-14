@@ -11,7 +11,7 @@ defmodule Project.Items do
     def delete_item(id) do
         Item
         |> Repo.get(id)
-        |> Repo.delete(id)
+        |> Repo.delete()
     end
 
     def update_item(id, attrs) do
